@@ -3,7 +3,7 @@ class CreateKeywords < ActiveRecord::Migration
     create_table :keywords do |t|
       t.string :text, null: false
       t.text :html_source, limit: 4294967295
-      t.string :total_result,
+      t.string :total_result
       t.timestamps null: false
     end
 
