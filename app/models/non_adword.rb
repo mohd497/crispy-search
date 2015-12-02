@@ -1,0 +1,2 @@
+class NonAdword < SearchResult
+end
