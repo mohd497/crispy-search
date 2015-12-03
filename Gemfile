@@ -52,3 +52,5 @@ gem 'nokogiri'
 gem 'carrierwave'
 
 gem 'addressable'
+
+gem 'sidekiq'

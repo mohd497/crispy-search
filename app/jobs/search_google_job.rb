@@ -1,21 +1,26 @@
 require 'addressable/uri'
 
 class SearchGoogleJob < ActiveJob::Base
-  attr_accessor :doc, :keyword
 
   queue_as :default
 
+  attr_accessor :doc, :keyword
+
   def perform(keyword)
-    html_source = crawl_html_search_page(keyword.text)
-    self.doc = Nokogiri::HTML(html_source)
-
     data = Hash.new
-    data[:html_source] = html_source # Page source
-    data[:total_result] = total_search_result # Total of search results
-    data[:total_links_count] = links_count # Total number of links
-    data[:adwords_attributes] = fetch_adwords # AdWords result
-    data[:non_adwords_attributes] = fetch_non_adwords # Non-AdWords result
 
+    if keyword.persisted? && keyword.html_source.blank?
+      html_source = crawl_html_search_page(keyword.text)
+      self.doc = Nokogiri::HTML(html_source)
+
+      data[:html_source] = html_source # Page source
+      data[:total_result] = total_search_result # Total of search results
+      data[:total_links_count] = links_count # Total number of links
+      data[:adwords_attributes] = fetch_adwords # AdWords result
+      data[:non_adwords_attributes] = fetch_non_adwords # Non-AdWords result
+    else
+      # plus up search hit
+    end
     keyword.update_attributes(data)
   end
 
@@ -55,4 +60,5 @@ class SearchGoogleJob < ActiveJob::Base
   def links_count
     doc.css('a').size
   end
+
 end
