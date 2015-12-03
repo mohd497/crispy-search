@@ -48,9 +48,15 @@ group :development do
 end
 
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'font-awesome-rails'
+
 gem 'nokogiri'
 gem 'carrierwave'
-
 gem 'addressable'
 
 gem 'sidekiq'
+
+gem 'devise'
+gem 'omniauth-google-oauth2'
+gem 'figaro'
+gem 'haml-rails', '~> 0.9'
