@@ -1,6 +1,9 @@
 require 'addressable/uri'
 
 class SearchGoogleJob < ActiveJob::Base
+  rescue_from(OpenURI::HTTPError) do
+    retry_job wait: 5.minutes, queue: :low_priority
+  end
 
   queue_as :default
 
@@ -27,7 +30,7 @@ class SearchGoogleJob < ActiveJob::Base
   def crawl_html_search_page(keyword)
     keyword = keyword.gsub(/\s/, '+') # replace space with '+'
     url = Addressable::URI.parse("https://www.google.com/search?q=#{keyword}")
-    source = open(url.normalize, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).read
+    source = open(url.normalize, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE) { |f| f.read }
 
     # TODO: improve performance
     # This will make result link work correctly, but shitty performance issue
