@@ -14,7 +14,7 @@ sample_data = [
 ]
 
 # Create sample data
-sample_data.each { |keyword| SearchGoogleJob.perform_later(keyword) }
+sample_data.each { |keyword| SearchGoogleJob.perform_now(keyword) }
 
 
 user = User.first_or_create(name: 'John Doe', avatar: Faker::Avatar.image,
@@ -30,8 +30,7 @@ EMAIL: demo@example.com
 PASSWORD: 123456
 
 API ACCESS CODE: #{access_token.token}
-
-## IF TOKEN EXPIRED YOU CAN RUN SEED AGAIN
 ===================================================================================
+IF TOKEN EXPIRED YOU CAN RUN SEED AGAIN
 eos
 
