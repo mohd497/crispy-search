@@ -1,0 +1,6 @@
+- flash.each do |msg_type, message|
+  - unless message.blank?
+    :javascript
+      $(document).ready(function () {
+        initial_notify("#{bootstrap_class_for(msg_type)}", "#{message}")
+      });
