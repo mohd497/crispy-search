@@ -11,15 +11,18 @@
     .col-sm-6
       .panel.panel-primary
         .panel-heading
-          %h3.panel-title AdWords
-
+          %h3.panel-title
+            AdWords
+            %span.badge= @keyword.adwords_count
         .panel-body
           = render partial: 'adword_table', locals: {results: @keyword.adwords, type: 'Adword'}
+
 
     .col-sm-6
       .panel.panel-primary
         .panel-heading
-          %h3.panel-title Non AdWords
-
+          %h3.panel-title
+            Non AdWords
+            %span.badge= @keyword.adwords_count
         .panel-body
           = render partial: 'adword_table', locals: {results: @keyword.non_adwords, type: 'NonAdword'}
