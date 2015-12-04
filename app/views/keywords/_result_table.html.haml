@@ -1,6 +1,5 @@
 %table.table.table-striped
   %tr
-    %th #
     %th= sort_link(@q, :text, 'Keyword')
     %th= sort_link(@q, :total_links_count, 'Total links')
     %th= sort_link(@q, :adwords_count, 'Adwords')
@@ -10,7 +9,6 @@
 
   - @keywords.each do |keyword|
     %tr
-      %td= keyword.id
       %td= link_to keyword.text, keyword_path(keyword)
       %td.text-right= keyword.total_links_count
       %td.text-right
