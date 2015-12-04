@@ -1,0 +1,28 @@
+.jumbotron
+  .container
+    %h1= @keyword.text
+    %p= @keyword.total_result
+    %p= "Total Links: #{@keyword.total_links_count}"
+    = link_to 'Cache page', cache_page_path(@keyword), target: '_blank', class: 'btn btn-warning'
+
+
+.container
+  .row
+    .col-sm-6
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            AdWords
+            %span.badge= @keyword.adwords_count
+        .panel-body
+          = render partial: 'adword_table', locals: {results: @keyword.adwords, type: 'Adword'}
+
+
+    .col-sm-6
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            Non AdWords
+            %span.badge= @keyword.adwords_count
+        .panel-body
+          = render partial: 'adword_table', locals: {results: @keyword.non_adwords, type: 'NonAdword'}

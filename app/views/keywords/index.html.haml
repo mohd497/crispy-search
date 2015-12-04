@@ -1,0 +1,19 @@
+.text-center
+  = image_tag 'logo.png'
+  %br
+  %br
+  = render 'shared/search_form'
+  %hr
+
+.text-right= paginate @keywords, params: {controller: :keywords, action: :index}
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Keywords
+
+  .panel-body
+    = render 'result_table'
+
+= page_entries_info @keywords
+%br
+%br

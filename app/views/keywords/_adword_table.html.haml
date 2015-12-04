@@ -1,0 +1,19 @@
+%table.table.table-striped
+  %tr
+    %th #
+    %th Title
+    %th Url
+    - if type == 'Adwords'
+      %th Position
+
+  - results.each_with_index do |result, i|
+    %tr
+      %td= i+1
+      %td= result.title
+      %td= link_to result.url, external_link(result.url), target: '_blank'
+      - if type == 'Adwords'
+        %td
+        - if result.top?
+          %span.label.label-danger TOP      
+        - else
+          %span.label.label-success Right

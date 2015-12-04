@@ -1,0 +1,24 @@
+%table.table.table-striped
+  %tr
+    %th= sort_link(@q, :text, 'Keyword')
+    %th= sort_link(@q, :total_links_count, 'Total links')
+    %th= sort_link(@q, :adwords_count, 'Adwords')
+    %th= sort_link(@q, :non_adwords_count, 'Non Adwords')
+    %th.text-center Total search result
+    %th View cache
+
+  - @keywords.each do |keyword|
+    %tr
+      %td= link_to keyword.text, keyword_path(keyword)
+      %td.text-right= keyword.total_links_count
+      %td.text-right
+        = keyword.adwords_count
+        - unless keyword.adwords_count.zero?
+          %span.label.label-danger= "T#{keyword.adwords.top.size}"
+          %span.label.label-success= "R#{keyword.adwords.right.size}"
+
+      %td.text-right= keyword.non_adwords_count
+      %td.text-right= keyword.total_result
+      %td= link_to 'Cache page', cache_page_path(keyword), target: '_blank'
+
+

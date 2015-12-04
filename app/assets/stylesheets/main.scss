@@ -1,0 +1,25 @@
+@import "base/mixins";
+@import "base/normailize";
+@import "base/global";
+
+// change navbar height
+.navbar-brand, .navbar-nav li a {
+  line-height: 50px;
+  height: 50px;
+  padding-top: 0;
+}
+
+
+// bring diviner in navbar back
+.navbar .divider-vertical {
+  height: 50px;
+  margin: 0 9px;
+  border-right: 1px solid #ffffff;
+  border-left: 1px solid #f2f2f2;
+}
+
+@media (max-width: 767px) {
+  .navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
