@@ -13,6 +13,27 @@ sample_data = [
     'hotel booking', 'trip advisor', 'car rent', 'ensogo', 'casino apps'
 ]
 
-sample_data.each { |key| Keyword.find_or_create_by(text: key) }
+# Create sample data
+ActiveRecord::Base.transaction do
+  sample_data.each { |key| Keyword.find_or_create_by(text: key) }
+end
 
+
+user = User.first_or_create(name: 'John Doe', avatar: Faker::Avatar.image,
+    email: 'demo@example.com', password: '123456')
+
+app = Doorkeeper::Application.first_or_create(name: 'Crispy Search', redirect_uri: Faker::Internet.url)
+access_token = Doorkeeper::AccessToken.create(application: app, resource_owner_id: user)
+
+puts <<-eos
+===================================================================================
+Welcome!! #{user.name}
+EMAIL: demo@example.com
+PASSWORD: 123456
+
+API ACCESS CODE: #{access_token.token}
+
+## IF TOKEN EXPIRED YOU CAN RUN SEED AGAIN
+===================================================================================
+eos
 
