@@ -1,5 +1,5 @@
 class Adword < SearchResult
-  belongs_to :keyword, counter_cache: true
+  belongs_to :keyword, inverse_of: :adwords, counter_cache: true
 
   enum position: [:top, :right]
 

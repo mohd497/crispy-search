@@ -22,6 +22,8 @@ class KeywordsController < ApplicationController
   def new
   end
 
+
+  # TODO: Sidekiq is too fast. Find the way to run it without get block.(Google block my ip when 500+ record)
   def create
     csv_content = params[:csv_file] ? params[:csv_file].read : nil
 
@@ -29,7 +31,8 @@ class KeywordsController < ApplicationController
       flash.now[:alert] = 'Cannot read csv file or content empty.'
       render :new
     else
-      Keyword.create_form_csv(csv_content)
+      data = CSV.parse(csv_content).flatten.uniq
+      data.map { |keyword| SearchGoogleJob.perform_later(keyword) }
       redirect_to root_path, notice: 'Upload success'
     end
   end

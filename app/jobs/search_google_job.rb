@@ -10,21 +10,22 @@ class SearchGoogleJob < ActiveJob::Base
   attr_accessor :doc, :keyword
 
   def perform(keyword)
-    data = Hash.new
 
-    if keyword.persisted? && keyword.html_source.blank?
-      html_source = crawl_html_search_page(keyword.text)
+    if Keyword.exists?(text: keyword)
+      Keyword.find_by(text: keyword).increase_hits
+    else
+      html_source = crawl_html_search_page(keyword)
       self.doc = Nokogiri::HTML(html_source)
 
+      data = {text: keyword}
       data[:html_source] = html_source # Page source
       data[:total_result] = total_search_result # Total of search results
       data[:total_links_count] = links_count # Total number of links
       data[:adwords_attributes] = fetch_adwords # AdWords result
       data[:non_adwords_attributes] = fetch_non_adwords # Non-AdWords result
-    else
-      # plus up search hit
+
+      Keyword.create(data)
     end
-    keyword.update_attributes(data)
   end
 
   def crawl_html_search_page(keyword)
