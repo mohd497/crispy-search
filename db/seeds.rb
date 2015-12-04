@@ -7,6 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-sample_data = ['ที่พักกระบี่', 'adwords', 'Nikon', 'Canon', 'Le Cordon Bleu', 'ราคาทอง', 'ตอนโด', 'pebble', 'La Roche-Posay', 'Chloé']
+sample_data = [
+    'ที่พักกระบี่', 'adwords', 'Nikon', 'Canon', 'Le Cordon Bleu',
+    'ราคาทอง', 'ตอนโด', 'pebble', 'La Roche-Posay', 'Chloé',
+    'hotel booking', 'trip advisor', 'car rent', 'ensogo', 'casino apps'
+]
 
 sample_data.each { |key| Keyword.find_or_create_by(text: key) }
+
+

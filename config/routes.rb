@@ -6,10 +6,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
       path_names: { sign_in: 'login', sign_out: 'logout' }
 
+  get '/view/:id' => 'keywords#show', as: :keyword
   get '/add_keyword' => 'keywords#new'
   post '/upload_csv' => 'keywords#create'
   get '/cache_page/:id' => 'keywords#cache_page', as: :cache_page
-
 
   # API route
   namespace :api, defaults: { format: :json } do

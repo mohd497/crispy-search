@@ -13,4 +13,8 @@ module ApplicationHelper
       image_tag 'default_avatar.png', height: 35
     end
   end
+
+  def external_link(link)
+    link =~ /^https?:\/\// ? link : "http://#{link}"
+  end
 end

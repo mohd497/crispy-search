@@ -4,7 +4,7 @@ RSpec.describe KeywordsController, type: :controller do
 
   before(:all) do
     @user = create(:user)
-    create_list(:keyword, 5)
+    @keywords = create_list(:keyword, 5)
   end
 
   describe '[GET] #index' do
@@ -16,18 +16,26 @@ RSpec.describe KeywordsController, type: :controller do
     end
   end
 
+  describe '[GET] #show' do
+
+    it 'assign specific keyword to @keyword' do
+      keyword = @keywords.sample
+
+      get :show, id: keyword.id
+      expect(assigns(:keyword)).to eq(keyword)
+    end
+  end
+
 
   describe '[GET] #cache_page' do
 
-    before(:all) do
-      @keyword = Keyword.last
+    before(:each) do
+      @keyword = @keywords.sample
     end
 
-    it 'assigns requested keyword to @keyword' do
-      keyword = Keyword.find @keyword.id
-
+    it 'assigns specific keyword to @keyword' do
       get :cache_page, id: @keyword.id
-      expect(assigns(:keyword)).to eq(keyword)
+      expect(assigns(:keyword)).to eq(@keyword)
     end
 
     it 'return cache html file' do

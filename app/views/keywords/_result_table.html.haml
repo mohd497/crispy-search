@@ -11,7 +11,7 @@
   - @keywords.each do |keyword|
     %tr
       %td= keyword.id
-      %td= keyword.text
+      %td= link_to keyword.text, keyword_path(keyword)
       %td.text-right= keyword.total_links_count
       %td.text-right
         = keyword.adwords_count
@@ -21,6 +21,6 @@
 
       %td.text-right= keyword.non_adwords_count
       %td.text-right= keyword.total_result
-      %td= link_to 'Cached page', cache_page_path(keyword), target: :blank
+      %td= link_to 'Cache page', cache_page_path(keyword), target: '_blank'
 
 

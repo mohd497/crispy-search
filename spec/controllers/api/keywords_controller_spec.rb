@@ -34,7 +34,7 @@ RSpec.describe Api::KeywordsController, type: :controller do
       expect(response.status).to eq(200)
     end
 
-    it 'retrieves a specific keyword' do
+    it 'retrieve a specific keyword' do
       keyword = @keywords.sample
 
       get :show, id: keyword.id, format: :json
@@ -46,46 +46,9 @@ RSpec.describe Api::KeywordsController, type: :controller do
       expect(json.to_json).to eq(keyword_json.to_json)
     end
   end
-
-  describe '[GET] #show' do
-
-    it 'responds with 200' do
-      get :show, id: @keywords.sample.id, format: :json
-      expect(response.status).to eq(200)
-    end
-
-    it 'retrieves a specific keyword' do
-      keyword = @keywords.sample
-
-      get :show, id: keyword.id, format: :json
-
-      json = JSON.parse(response.body)
-      keyword_json = KeywordSerializer.new(keyword)
-
-      expect(response.status).to eq(200)
-      expect(json.to_json).to eq(keyword_json.to_json)
-    end
-  end
-
 
   describe '[POST] #create' do
 
-    it 'responds with 200' do
-      get :show, id: @keywords.sample.id, format: :json
-      expect(response.status).to eq(200)
-    end
-
-    it 'retrieves a specific keyword' do
-      keyword = @keywords.sample
-
-      get :show, id: keyword.id, format: :json
-
-      json = JSON.parse(response.body)
-      keyword_json = KeywordSerializer.new(keyword)
-
-      expect(response.status).to eq(200)
-      expect(json.to_json).to eq(keyword_json.to_json)
-    end
   end
 
 end
