@@ -1,8 +1,8 @@
 require 'csv'
 
 class Keyword < ActiveRecord::Base
-  has_many :adwords
-  has_many :non_adwords
+  has_many :adwords, dependent: :destroy
+  has_many :non_adwords, dependent: :destroy
 
   validates :text, presence: true, uniqueness: { case_sensitive: false }
 
@@ -11,13 +11,24 @@ class Keyword < ActiveRecord::Base
 
   after_create :generate_report
 
-  def self.create_form_csv(file)
-    keywords = CSV.read(file).flatten.uniq.map { |keyword| { text: keyword } }
+  scope :last_update, -> { order('updated_at desc') }
 
-    # Tried of this google blocked my ip
-    # ActiveRecord::Base.transaction { Keyword.create(keywords) }
-    Keyword.create(keywords)
+  def self.create_form_csv(csv)
+    data = if csv.kind_of?(String)
+             CSV.parse(csv)
+           elsif csv.kind_of?(File)
+             CSV.read(csv)
+           else
+             raise 'Invalid CSV format'
+           end
+
+    ActiveRecord::Base.transaction do
+      data.flatten.uniq.map do |keyword|
+        Keyword.find_or_create_by(text: keyword)
+      end
+    end
   end
+
 
   private
 
@@ -27,6 +38,9 @@ class Keyword < ActiveRecord::Base
   end
 
   def generate_report
-    SearchGoogleJob.perform_later(self) # Let's sidekiq do the rest
+    # TODO: Sidekiq is too fast. (Google block ip when testing with 500+ record)
+    # TODO: Find the way to run it without get block.
+
+    SearchGoogleJob.perform_later(self) # Let's sidekiq ROCK!!
   end
 end

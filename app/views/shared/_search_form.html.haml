@@ -1,0 +1,5 @@
+= search_form_for @q, url: root_path, class: 'form-inline' do |f|
+  .form-group
+    = f.label :text, 'Keyword', class: 'sr-only'
+    = f.search_field :text_cont, placeholder: 'Type your keyword', autofocus: true, class: 'form-control'
+  = f.submit 'Search', class: 'btn btn-primary'
