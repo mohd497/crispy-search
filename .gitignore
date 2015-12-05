@@ -36,6 +36,3 @@ config/database.yml
 
 # Rubymine indexer stuff
 /.idea
-
-# Ignore application configuration
-/config/application.yml
