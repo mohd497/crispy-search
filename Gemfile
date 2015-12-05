@@ -40,3 +40,14 @@ gem 'kaminari'
 
 gem 'figaro'
 
+group :development do
+  gem 'capistrano', '~> 3.1', require: false
+  gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma', require: false
+end
+
+gem 'puma'
+
