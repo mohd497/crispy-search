@@ -14,9 +14,7 @@ sample_data = [
 ]
 
 # Create sample data
-ActiveRecord::Base.transaction do
-  sample_data.each { |key| Keyword.find_or_create_by(text: key) }
-end
+sample_data.each { |key| Keyword.find_or_create_by(text: key) }
 
 
 user = User.first_or_create(name: 'John Doe', avatar: Faker::Avatar.image,
