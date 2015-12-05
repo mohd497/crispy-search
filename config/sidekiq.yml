@@ -1,0 +1,2 @@
+:concurrency: 7
+:pidfile: tmp/pids/sidekiq.pid
