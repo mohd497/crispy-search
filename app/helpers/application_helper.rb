@@ -17,4 +17,8 @@ module ApplicationHelper
   def external_link(link)
     link =~ /^https?:\/\// ? link : "http://#{link}"
   end
+
+  def demo_stage?
+    !user_signed_in? && Rails.env.production?
+  end
 end

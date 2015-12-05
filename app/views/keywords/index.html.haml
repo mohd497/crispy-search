@@ -1,9 +1,22 @@
+- if demo_stage?
+  .alert.alert-warning
+    %strong Hello welcome!!
+    \- You can use email
+    %strong demo@example.com
+    and password
+    %strong 123456
+    for login
+    = link_to 'here', new_user_session_path
+
+
 .text-center
   = image_tag 'logo.png'
   %br
   %br
   = render 'shared/search_form'
+
   %hr
+
 
 .text-right= paginate @keywords, params: {controller: :keywords, action: :index}
 
